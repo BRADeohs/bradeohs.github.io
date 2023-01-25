@@ -1,10 +1,10 @@
 	.vid_1_text {
-	  left: 0;
+	  left: 200;
+	  top: 200;	
 	  opacity: 0;
 	  pointer-events: none; /* don’t block video clicks */
 	  position: absolute;
 	  transition: opacity 150ms linear;
-	  top: 0; /* adjust "top" and "left" to taste */
 	}
 
 	.vid_1_wrapper {
@@ -12,7 +12,7 @@
 	}
 
 	.vid_1_wrapper:hover .vid_1 {
-	  filter: blur(10px);
+	  filter: blur(0px);
 	}
 
 	.vid_1_wrapper:hover .vid_1_text {
