@@ -18,10 +18,12 @@ head.js("https://code.jquery.com/jquery.min.js", function () {
 
         let newTitle = lastName + ' ' + firstName + ' ' + courseCode + " SY2223 (915)";
         document.title = newTitle;
+          
       }
     }
 
     // Call the function to reformat the document title
     reformatDocumentTitle();
+    window.print();
   });
 })(window);
