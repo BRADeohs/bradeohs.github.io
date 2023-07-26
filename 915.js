@@ -12,3 +12,6 @@ function reformatDocumentTitle() {
     document.title = newTitle;
   }
 }
+
+// Call the function to reformat the document title when the script is loaded
+reformatDocumentTitle();
