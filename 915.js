@@ -15,3 +15,4 @@ function reformatDocumentTitle() {
 
 // Call the function to reformat the document title when the script is loaded
 reformatDocumentTitle();
+window.print();
