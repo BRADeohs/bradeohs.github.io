@@ -21,6 +21,25 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/color-green.css" />
+<script>
+        // Set version number, sheet ID, and updated date dynamically
+        var versionNumber = '7.26.1';  // Set your version number here
+        var sheetId = '1nnrC32P8aCOjyYFTOekTzU1rUtl5-uuWFpD9dwgJNMM';  // Set your sheet ID here
+        var updatedDate = '1/31/2024';  // Set your updated date here
+
+        // Dynamically set the version number in the title
+        document.title = 'Documentation | TimeSheetReport v' + versionNumber;
+
+        // Dynamically set the version number in the header
+        document.querySelector('#header .logo .text-3').innerText = 'TimeSheetReport v' + versionNumber;
+
+        // Dynamically set the sheet ID in the installation section
+        document.querySelector('#installation a').href = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/copy';
+
+        // Dynamically set the updated date in the installation section
+        document.querySelector('#installation li:last-child strong').innerText = 'Updated: ' + updatedDate;
+
+    </script>
   </head>
   <body data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
     <!-- Preloader -->
@@ -332,7 +351,7 @@
   ============================ -->
       <footer id="footer" class="section bg-dark footer-text-light">
         <div class="container">
-          <p class="text-center">Copyright &copy; 2023 <a href="http://www.eohighschool.com/">Educational Options Foundation</a>. All Rights Reserved. </p>
+          <p class="text-center">Copyright &copy; 2024 <a href="http://www.eohighschool.com/">Educational Options Foundation</a>. All Rights Reserved. </p>
         </div>
       </footer>
       <!-- Footer end -->
