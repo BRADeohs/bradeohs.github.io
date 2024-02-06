@@ -35,25 +35,24 @@
   document.title = 'Documentation | TimeSheetReport v' + versionNumber;
 
   // Dynamically set the version number in the header
-  var logoText = document.querySelector('#header .logo .text-3');
+  var logoText = document.getElementById('lT');
   if (logoText) {
     console.log('Setting logo text.');
     logoText.innerText = 'TimeSheetReport v' + versionNumber;
   }
 
   // Dynamically set the sheet ID in the installation section
-  var installationLink = document.querySelector('#installation a');
+  var installationLink = document.getElementById('ssLink');
   if (installationLink) {
     console.log('Setting installation link.');
     installationLink.href = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/copy';
   }
 
-  // Dynamically set the updated date in the installation section
-  var lastListItem = document.querySelector('#installation li:last-child strong');
-  if (lastListItem) {
-    console.log('Setting updated date.');
-    lastListItem.innerText = 'Updated: ' + updatedDate;
-  }
+	// Update the element with the new date
+var updatedDateElement = document.getElementById('updatedDate');
+if (updatedDateElement) {
+  updatedDateElement.innerHTML = '<strong>Updated:</strong> ' + updatedDate;
+}
 };
 
 	</script>
@@ -86,7 +85,7 @@
             </button>
             <!-- Logo -->
             <a class="logo ml-md-3" href="index.html" title="TimeSheetReport">
-              <span class="text-3 text-light ml-2">TimeSheetReport v7.26.1</span>
+              <span class="text-3 text-light ml-2" id="lT">TimeSheetReport v7.26.1</span>
             </a>
             <!-- Logo End -->
           </div>
@@ -174,7 +173,7 @@
                   <li>
                     <strong class="font-weight-700">Created:</strong> 01/20/2023
                   </li>
-                  <li>
+                  <li id="updatedDate">
                     <strong>Updated:</strong> 1/31/2024
                   </li>
                 </ul>
@@ -191,7 +190,7 @@
             <p class="lead">Follow the steps below to install and authorize the TimeSheetReport</p>
             <ol>
               <li>
-                <a href="https://docs.google.com/spreadsheets/d/1nnrC32P8aCOjyYFTOekTzU1rUtl5-uuWFpD9dwgJNMM/copy" target="_blank">Click Here</a> and choose <i>Make a Copy</i>
+                <a id="ssLink" href="https://docs.google.com/spreadsheets/d/1nnrC32P8aCOjyYFTOekTzU1rUtl5-uuWFpD9dwgJNMM/copy" target="_blank">Click Here</a> and choose <i>Make a Copy</i>
               </li>
               <img src="assets/images/makeCopy.png"></img>
               <li>Click on the <i>Reset button</i> to trigger an <i>Authorization Request</i> for the report. </li>
