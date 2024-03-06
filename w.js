@@ -13,6 +13,13 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
         return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     }
 
+    // Update the selector for the first element
+    let firstElementSelector = "body > div > div > table:nth-child(1) > tbody > tr > td > font:nth-child(1) > b";
+    
+    // Update the selector for the second element
+    let secondElementSelector = "body > div > div > table.message > tbody > tr:nth-child(3) > td > table > tbody > tr > td > div:nth-child(1) > font > div > div > div.gmail_attr";
+
+    // Loop through the first set of elements and update them
     for (let i = 2; i < 9; i++) {
         let s = "body > div > div > table.message > tbody > tr:nth-child(3) > td > table > tbody > tr > td > div:nth-child(1) > font > div > div > div:nth-child(4) > table > tbody > tr > td > table:nth-child(3) > tbody > tr:nth-child(" + i + ") > td:nth-child(1) > strong";
         let ti = document.querySelector(s);
@@ -22,6 +29,18 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
             bakup();
             break;
         }
+    }
+
+    // Select and update the first element
+    let firstElement = document.querySelector(firstElementSelector);
+    if (firstElement != null) {
+        iD(firstElement);
+    }
+
+    // Select and update the second element
+    let secondElement = document.querySelector(secondElementSelector);
+    if (secondElement != null) {
+        dM(secondElement);
     }
 
     var qi = document.querySelector("body > div > div > table.message > tbody > tr:nth-child(3) > td > table > tbody > tr > td > div:nth-child(1) > font > div > div > div:nth-child(4) > table > tbody > tr > td > table:nth-child(1) > tbody > tr > td:nth-child(2) > strong");
@@ -42,22 +61,18 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
 
     function iD(select) {
         let tii = select.textContent;
-        tii = tii.split(' ');
-        let weekNum = parseInt(tii.pop());
+        let weekNum = parseInt(tii.split(' ').pop());
         weekNum++;
-        tii.push(weekNum.toString());
-        let fin = tii.join(' ');
-        select.textContent = fin;
+        tii = tii.replace(/\d+$/, weekNum);
+        select.textContent = tii;
     }
 
     function pQ(select) {
         let tii = select.textContent;
-        tii = tii.split(' ');
-        let weekNum = parseInt(tii.pop());
+        let weekNum = parseInt(tii.split(' ').pop());
         weekNum++;
-        tii.push(weekNum.toString());
-        let fin = tii.join(' ');
-        select.textContent = fin;
+        tii = tii.replace(/\d+$/, weekNum);
+        select.textContent = tii;
     }
 
     function dM(select) {
