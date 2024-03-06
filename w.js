@@ -41,12 +41,9 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     function iD(select) {
         let tii = select.textContent;
         tii = tii.split(' ');
-        let tdi = new MyDate(tii[1]);
-        let nextWeek = tdi.addWeeks(1);
-        let yyyy = nextWeek.getFullYear();
-        let mm = nextWeek.getMonth() + 1;
-        let dd = nextWeek.getDate();
-        tii[1] = mm + '/' + dd + '/' + yyyy;
+        let weekNum = parseInt(tii.pop());
+        weekNum++;
+        tii.push(weekNum.toString());
         let fin = tii.join(' ');
         select.textContent = fin;
     }
@@ -54,33 +51,28 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     function pQ(select) {
         let tii = select.textContent;
         tii = tii.split(' ');
-        let tdi = new MyDate(tii[5] + tii[6] + tii[7]);
-        let nextWeek = tdi.addWeeks(1);
-        let fDate = nextWeek.toLocaleString('en-US', { dateStyle: 'long' });
-        tii[5] = fDate;
-        tii[6] = '';
-        tii[7] = '';
+        let weekNum = parseInt(tii.pop());
+        weekNum++;
+        tii.push(weekNum.toString());
         let fin = tii.join(' ');
         select.textContent = fin;
     }
 
     function dM(select) {
         let tii = select.innerHTML.split(' ');
-        let tdi = new MyDate(tii[1]);
-        let nextWeek = tdi.addWeeks(1);
-        let yyyy = nextWeek.getFullYear();
-        let mm = nextWeek.getMonth() + 1;
-        let dd = nextWeek.getDate();
-        let fin = tii[0] + ' ' + mm + '/' + dd + '/' + yyyy;
+        let weekNum = parseInt(tii.pop().split(':')[1]);
+        weekNum++;
+        tii.push('Week: ' + weekNum);
+        let fin = tii.join(' ');
         select.innerHTML = fin;
     }
 
     function eM(select) {
         let tii = select.innerHTML.split(' - ');
-        let tdi = new MyDate(tii[1]);
-        let nextWeek = tdi.addWeeks(1);
-        let fDate = nextWeek.toLocaleString('en-US', { dateStyle: 'long' });
-        let fin = tii[0] + ' - ' + fDate;
+        let weekNum = parseInt(tii[0].split(':')[1]);
+        weekNum++;
+        tii[0] = 'Week: ' + weekNum;
+        let fin = tii.join(' - ');
         select.innerHTML = fin;
     }
 });
