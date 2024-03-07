@@ -46,25 +46,27 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     
     window.print(); // Print the document
 
-     function updateWeekNumber(selector, weekOffset) {
+function updateWeekNumber(selector, weekOffset) {
     let element = document.querySelector(selector);
     if (element) {
         let text = element.innerHTML;
+        let weekNum;
         if (selector.includes("gmail_attr")) {
             let regex = /Subject:\s*.*?(\d+)(?=<br>)/;
             let match = text.match(regex);
             if (match) {
-                let weekNum = parseInt(match[1]) + weekOffset;
-                let newText = text.replace(match[1], weekNum);
-                element.innerHTML = newText;
+                weekNum = parseInt(match[1]) + weekOffset;
             }
         } else {
-            let weekNum = parseInt(text.match(/\d+/)[0]) + weekOffset;
-            let newText = text.replace(/\d+/, weekNum);
-            element.innerHTML = newText;
+            weekNum = parseInt(text.match(/\d+/)[0]) + weekOffset;
         }
+        // Limit week number to a maximum of 53 and overflow to 1
+        weekNum = (weekNum > 53) ? weekNum - 53 : weekNum;
+        let newText = text.replace(/\d+/, weekNum);
+        element.innerHTML = newText;
     }
 }
+
 
 
 
