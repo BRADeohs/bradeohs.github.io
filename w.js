@@ -60,12 +60,13 @@ function updateWeekNumber(selector, weekOffset) {
         } else {
             weekNum = parseInt(text.match(/\d+/)[0]) + weekOffset;
         }
-        // Limit week number to a maximum of 53 and overflow to 1
-        weekNum = (weekNum > 53) ? weekNum - 53 : weekNum;
+        // Adjust week number to overflow to 1 after reaching 53
+        weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
         let newText = text.replace(/\d+/, weekNum);
         element.innerHTML = newText;
     }
 }
+
 
 
 
