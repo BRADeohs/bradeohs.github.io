@@ -50,8 +50,8 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
         let element = document.querySelector(selector);
         if (element) {
             let text = element.textContent.trim();
-            let weekNum = parseInt(text.match(/\d+$/)[0]) + weekOffset;
-            let newText = text.replace(/\d+$/, weekNum);
+            let weekNum = parseInt(text.match(/\d+/)[0]) + weekOffset;
+            let newText = text.replace(/\d+/, weekNum);
             element.textContent = newText;
         }
     }
@@ -69,7 +69,7 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
         let tii = select.textContent;
         tii = tii.split(' ');
         let tdi = new MyDate(tii[1]);
-        let nextWeek = tdi.addWeeks(1);
+        let nextWeek = tdi.addWeeks(weekOffset);
         let yyyy = nextWeek.getFullYear();
         let mm = nextWeek.getMonth() + 1;
         let dd = nextWeek.getDate();
@@ -82,7 +82,7 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
         let tii = select.textContent;
         tii = tii.split(' ');
         let tdi = new MyDate(tii[5] + tii[6] + tii[7]);
-        let nextWeek = tdi.addWeeks(1);
+        let nextWeek = tdi.addWeeks(weekOffset);
         let fDate = nextWeek.toLocaleString('en-US', { dateStyle: 'long' });
         tii[5] = fDate;
         tii[6] = '';
@@ -94,7 +94,7 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     function dM(select) {
         let tii = select.innerHTML.split(' ');
         let tdi = new MyDate(tii[1]);
-        let nextWeek = tdi.addWeeks(1);
+        let nextWeek = tdi.addWeeks(weekOffset);
         let yyyy = nextWeek.getFullYear();
         let mm = nextWeek.getMonth() + 1;
         let dd = nextWeek.getDate();
@@ -105,10 +105,11 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     function eM(select) {
         let tii = select.innerHTML.split(' - ');
         let tdi = new MyDate(tii[1]);
-        let nextWeek = tdi.addWeeks(1);
+        let nextWeek = tdi.addWeeks(weekOffset);
         let fDate = nextWeek.toLocaleString('en-US', { dateStyle: 'long' });
         let fin = tii[0] + ' - ' + fDate;
         select.innerHTML = fin;
     }
 });
+
 
