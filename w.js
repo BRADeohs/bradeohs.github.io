@@ -62,10 +62,12 @@ function updateWeekNumber(selector, weekOffset) {
         }
         // Adjust week number to overflow to 1 after reaching 53
         weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
+
         let newText = text.replace(/\d+/, weekNum);
         element.innerHTML = newText;
     }
 }
+
 
 
 
