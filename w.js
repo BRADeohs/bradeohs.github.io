@@ -46,15 +46,20 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     
     window.print(); // Print the document
 
-    function updateWeekNumber(selector, weekOffset) {
-        let element = document.querySelector(selector);
-        if (element) {
-            let text = element.textContent.trim();
-            let weekNum = parseInt(text.match(/\d+/)[0]) + weekOffset;
-            let newText = text.replace(/\d+/, weekNum);
-            element.textContent = newText;
+        function updateWeekNumber(selector, weekOffset) {
+            let element = document.querySelector(selector);
+            if (element) {
+                let text = element.textContent.trim();
+                let regex = /(\d+)(?=\s*-\s*\w+\s+\d{1,2},\s*\d{4})/;
+                let match = text.match(regex);
+                if (match) {
+                    let weekNum = parseInt(match[0]) + weekOffset;
+                    let newText = text.replace(match[0], weekNum);
+                    element.textContent = newText;
+                }
+            }
         }
-    }
+
 
     function bakup() {
         for (let i = 15; i < 22; i++) {
