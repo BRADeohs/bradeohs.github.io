@@ -88,8 +88,12 @@ function updateWeekNumber(selector, weekOffset) {
     // Handle additional cases with different formatting
     let subjectElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[6]");
     if (subjectElement) {
-        let weekNum = parseInt(subjectElement.textContent.match(/\d+/)[0]) + weekOffset;
-        subjectElement.textContent = subjectElement.textContent.replace(/\d+/, weekNum);
+        let regex = /Subject:\s*.*?(\d+)(?=<br>)/;
+        let match = subjectElement.textContent.match(regex);
+        if (match) {
+            let weekNum = parseInt(match[1]) + weekOffset;
+            subjectElement.textContent = subjectElement.textContent.replace(match[1], weekNum);
+        }
     }
 
     let dateElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[10]");
@@ -97,8 +101,14 @@ function updateWeekNumber(selector, weekOffset) {
         let weekNum = parseInt(dateElement.textContent.match(/\d+/)[0]) + weekOffset;
         dateElement.textContent = dateElement.textContent.replace(/\d+/, weekNum);
     }
-}
 
+    // Update the third selector using the existing logic
+    let thirdElement = document.querySelector("body > div > div > table:nth-child(1) > tbody > tr > td > font:nth-child(1) > b");
+    if (thirdElement) {
+        let weekNum = parseInt(thirdElement.textContent.match(/\d+/)[0]) + weekOffset;
+        thirdElement.textContent = thirdElement.textContent.replace(/\d+/, weekNum);
+    }
+}
 
     function iD(select) {
         let tii = select.textContent;
