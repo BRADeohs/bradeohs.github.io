@@ -76,14 +76,29 @@ function updateWeekNumber(selector, weekOffset) {
 
 
 
-    function bakup() {
-        for (let i = 15; i < 22; i++) {
-            let x = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[" + i + "]");
-            iD(x);
-        }
-        let mi = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[12]");
-        pQ(mi);
+  function bakup() {
+    for (let i = 15; i < 22; i++) {
+        let x = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[" + i + "]");
+        iD(x);
     }
+
+    let mi = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[12]");
+    pQ(mi);
+
+    // Handle additional cases with different formatting
+    let subjectElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[6]");
+    if (subjectElement) {
+        let weekNum = parseInt(subjectElement.textContent.match(/\d+/)[0]) + weekOffset;
+        subjectElement.textContent = subjectElement.textContent.replace(/\d+/, weekNum);
+    }
+
+    let dateElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[10]");
+    if (dateElement) {
+        let weekNum = parseInt(dateElement.textContent.match(/\d+/)[0]) + weekOffset;
+        dateElement.textContent = dateElement.textContent.replace(/\d+/, weekNum);
+    }
+}
+
 
     function iD(select) {
         let tii = select.textContent;
