@@ -94,16 +94,16 @@ function bakup() {
         subjectElement.textContent = subjectElement.textContent.replace(/\d+/, weekNum);
     }
 
-        let dateElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[10]");
-        if (dateElement) {
-            let match = dateElement.textContent.match(/Week:\s*(\d+)/);
-            if (match) {
-                let weekNum = parseInt(match[1]) + weekOffset;
-                dateElement.textContent = dateElement.textContent.replace(/\d+/, weekNum);
-            }
+    let dateElement = mi;
+    if (dateElement) {
+        let match = dateElement.textContent.match(/Week:\s*(\d+)/);
+        if (match) {
+            let weekNum = parseInt(match[1]) + weekOffset;
+            dateElement.textContent = dateElement.textContent.replace(/\d+/, weekNum);
         }
-        updateWeekNumber("body > div > div > table:nth-child(1) > tbody > tr > td > font:nth-child(1) > b", weekOffset);
+    }
 }
+
 
 
     function iD(select) {
