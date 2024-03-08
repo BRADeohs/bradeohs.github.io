@@ -14,7 +14,7 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     }
 
     // Prompt for the week offset
-    let weekOffset = parseInt(prompt("Enter week offset (positive or negative integer):"));
+    let weekOffset = parseInt(prompt("Enter week offset (positive or negative integer e.g. 53 = 1 year):"));
 
     // Check if the input is a valid number
     if (isNaN(weekOffset)) {
@@ -43,68 +43,86 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     updateWeekNumber("body > div > div > table:nth-child(1) > tbody > tr > td > font:nth-child(1) > b", weekOffset);
     updateWeekNumber("body > div > div > table.message > tbody > tr:nth-child(3) > td > table > tbody > tr > td > div:nth-child(1) > font > div > div > div.gmail_attr", weekOffset);
     updateWeekNumber("body > div > div > table.message > tbody > tr:nth-child(3) > td > table > tbody > tr > td > div:nth-child(1) > font > div > div > div:nth-child(4) > table > tbody > tr > td > table:nth-child(1) > tbody > tr > td:nth-child(2) > strong", weekOffset);
-    
+  
+    // Update the document title
+    let originalTitle = document.title;
+    if (originalTitle.startsWith('z')) {
+        let weekNumberMatch = originalTitle.match(/z(\d+)H/);
+        if (weekNumberMatch) {
+            let currentWeek = parseInt(weekNumberMatch[1]);
+            let newWeek = currentWeek + weekOffset;
+            // Adjust week number to overflow to 1 after reaching 53
+            newWeek = (newWeek > 53) ? newWeek - 53 : (newWeek < 1) ? newWeek + 53 : newWeek;
+            let newTitle = originalTitle.replace(/z\d+H/, `z${newWeek}H`);
+            document.title = newTitle;
+        }
+    } else {
+        let t = "Educational Options Foundation Mail - Fwd: Home Timesheets - ";
+        let ogTitle = document.title;
+        if (ogTitle.includes(t)) {
+            ogTitle = ogTitle.replace(t, "");
+            let weekNum = ogTitle.slice(-2);
+            weekNum = weekNum.replace(" ", "0") + weekOffset;
+            ogTitle = ogTitle.slice(0, -2);
+            ogTitle = ogTitle.replace(" - ", "");
+            ogTitle = ogTitle.replace(" -", "");
+            ogTitle = ogTitle.replace(",", "");
+            let newTitle = 'z' + weekNum + 'H ' + ogTitle;
+            document.title = newTitle;
+        }
+    }
+
     window.print(); // Print the document
 
-function updateWeekNumber(selector, weekOffset) {
-    let element = document.querySelector(selector);
-    if (element) {
-        let text = element.innerHTML;
-        if (selector.includes("gmail_attr")) {
-            let regex = /Subject:\s*.*?(\d+)(?=<br>)/;
-            let match = text.match(regex);
-            if (match) {
-                let weekNum = parseInt(match[1]) + weekOffset;
+    function updateWeekNumber(selector, weekOffset) {
+        let element = document.querySelector(selector);
+        if (element) {
+            let text = element.innerHTML;
+            if (selector.includes("gmail_attr")) {
+                let regex = /Subject:\s*.*?(\d+)(?=<br>)/;
+                let match = text.match(regex);
+                if (match) {
+                    let weekNum = parseInt(match[1]) + weekOffset;
+                    // Adjust week number to overflow to 1 after reaching 53
+                    weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
+                    let newText = text.replace(match[1], weekNum);
+                    element.innerHTML = newText;
+                }
+            } else {
+                let weekNum = parseInt(text.match(/\d+/)[0]) + weekOffset;
                 // Adjust week number to overflow to 1 after reaching 53
                 weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
-                let newText = text.replace(match[1], weekNum);
+                let newText = text.replace(/\d+/, weekNum);
                 element.innerHTML = newText;
             }
-        } else {
-            let weekNum = parseInt(text.match(/\d+/)[0]) + weekOffset;
-            // Adjust week number to overflow to 1 after reaching 53
-            weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
-            let newText = text.replace(/\d+/, weekNum);
-            element.innerHTML = newText;
         }
     }
-}
 
+    function bakup() {
+        for (let i = 15; i < 22; i++) {
+            let x = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[" + i + "]");
+            iD(x);
+        }
 
+        let mi = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[12]");
+        pQ(mi);
 
+        // Handle additional cases with different formatting
+        let subjectElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[6]");
+        if (subjectElement) {
+            let weekNum = parseInt(subjectElement.textContent.match(/\d+/)[0]) + weekOffset;
+            subjectElement.textContent = subjectElement.textContent.replace(/\d+/, weekNum);
+        }
 
-
-
-
-  
-
-function bakup() {
-    for (let i = 15; i < 22; i++) {
-        let x = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[" + i + "]");
-        iD(x);
-    }
-
-    let mi = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[12]");
-    pQ(mi);
-
-    // Handle additional cases with different formatting
-    let subjectElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[6]");
-    if (subjectElement) {
-        let weekNum = parseInt(subjectElement.textContent.match(/\d+/)[0]) + weekOffset;
-        subjectElement.textContent = subjectElement.textContent.replace(/\d+/, weekNum);
-    }
-
-    let dateElement = mi;
-    if (dateElement) {
-        let match = dateElement.textContent.match(/Week:\s*(\d+)/);
-        if (match) {
-            let weekNum = parseInt(match[1]) + weekOffset;
-            dateElement.textContent = dateElement.textContent.replace(/\d+/, weekNum);
+        let dateElement = mi;
+        if (dateElement) {
+            let match = dateElement.textContent.match(/Week:\s*(\d+)/);
+            if (match) {
+                let weekNum = parseInt(match[1]) + weekOffset;
+                dateElement.textContent = dateElement.textContent.replace(/\d+/, weekNum);
+            }
         }
     }
-}
-
-
 
     function iD(select) {
         let tii = select.textContent;
@@ -152,5 +170,3 @@ function bakup() {
         select.innerHTML = fin;
     }
 });
-
-
