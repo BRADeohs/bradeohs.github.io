@@ -84,45 +84,53 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
                 if (match) {
                     let weekNum = parseInt(match[1]) + weekOffset;
                     // Adjust week number to overflow to 1 after reaching 53
+                    // Adjust week number to overflow to 1 after reaching 53 and vice versa for negative offsets
                     weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
+
                     let newText = text.replace(match[1], weekNum);
                     element.innerHTML = newText;
                 }
             } else {
                 let weekNum = parseInt(text.match(/\d+/)[0]) + weekOffset;
-                // Adjust week number to overflow to 1 after reaching 53
-                weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
+            // Adjust week number to overflow to 1 after reaching 53 and vice versa for negative offsets
+            weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
+
                 let newText = text.replace(/\d+/, weekNum);
                 element.innerHTML = newText;
             }
         }
     }
 
-    function bakup() {
-        for (let i = 15; i < 22; i++) {
-            let x = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[" + i + "]");
-            iD(x);
-        }
+       function bakup() {
+    for (let i = 15; i < 22; i++) {
+        let x = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[" + i + "]");
+        iD(x);
+    }
 
-        let mi = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[12]");
-        pQ(mi);
+    let mi = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[12]");
+    pQ(mi);
 
-        // Handle additional cases with different formatting
-        let subjectElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[6]");
-        if (subjectElement) {
-            let weekNum = parseInt(subjectElement.textContent.match(/\d+/)[0]) + weekOffset;
-            subjectElement.textContent = subjectElement.textContent.replace(/\d+/, weekNum);
-        }
+    // Handle additional cases with different formatting
+    let subjectElement = getElementByXpath("/html/body/div/div/table[2]/tbody/tr[3]/td/table/tbody/tr/td/div[1]/font/text()[6]");
+    if (subjectElement) {
+        let weekNum = parseInt(subjectElement.textContent.match(/\d+/)[0]) + weekOffset;
+        // Apply overflow protection
+        weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
+        subjectElement.textContent = subjectElement.textContent.replace(/\d+/, weekNum);
+    }
 
-        let dateElement = mi;
-        if (dateElement) {
-            let match = dateElement.textContent.match(/Week:\s*(\d+)/);
-            if (match) {
-                let weekNum = parseInt(match[1]) + weekOffset;
-                dateElement.textContent = dateElement.textContent.replace(/\d+/, weekNum);
-            }
+    let dateElement = mi;
+    if (dateElement) {
+        let match = dateElement.textContent.match(/Week:\s*(\d+)/);
+        if (match) {
+            let weekNum = parseInt(match[1]) + weekOffset;
+            // Apply overflow protection
+            weekNum = (weekNum > 53) ? weekNum - 53 : (weekNum < 1) ? weekNum + 53 : weekNum;
+            dateElement.textContent = dateElement.textContent.replace(/\d+/, weekNum);
         }
     }
+}
+
 
     function iD(select) {
         let tii = select.textContent;
