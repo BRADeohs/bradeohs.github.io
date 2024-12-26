@@ -59,16 +59,24 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     } else {
         let t = "Educational Options Foundation Mail - Fwd: Home Timesheets - ";
         let ogTitle = document.title;
+        
         if (ogTitle.includes(t)) {
             ogTitle = ogTitle.replace(t, "");
-            let weekNum = ogTitle.slice(-2);
-            weekNum = (parseInt(weekNum.replace(" ", "0"), 10) + weekOffset).toString();
-            ogTitle = ogTitle.slice(0, -2);
+            let weekNum = ogTitle.match(/\d+$/)?.[0]; // Extract the trailing number
+            if (weekNum) {
+                weekNum = String(Number(weekNum) + weekOffset).padStart(2, '0'); // Ensure 2 digits
+            } else {
+                weekNum = "01"; // Fallback if no number is found
+            }
+        
+            ogTitle = ogTitle.replace(/ - \d+$/, ""); // Remove trailing week number and hyphen
             ogTitle = ogTitle.replace(" - ", "");
             ogTitle = ogTitle.replace(" -", "");
             ogTitle = ogTitle.replace(",", "");
             let newTitle = 'z' + weekNum + 'H ' + ogTitle;
             document.title = newTitle;
+        }
+
         }
     }
 
