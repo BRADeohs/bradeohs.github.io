@@ -62,7 +62,7 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
         if (ogTitle.includes(t)) {
             ogTitle = ogTitle.replace(t, "");
             let weekNum = ogTitle.slice(-2);
-            weekNum = weekNum.replace(" ", "0") + weekOffset;
+            weekNum = (parseInt(weekNum.replace(" ", "0"), 10) + weekOffset).toString();
             ogTitle = ogTitle.slice(0, -2);
             ogTitle = ogTitle.replace(" - ", "");
             ogTitle = ogTitle.replace(" -", "");
