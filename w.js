@@ -47,15 +47,17 @@ head.js("https://code.jquery.com/jquery.min.js", function() {
     // Update the document title
     let originalTitle = document.title;
     if (originalTitle.startsWith('z')) {
-        let weekNumberMatch = originalTitle.match(/z(\d+)H/);
-        if (weekNumberMatch) {
-            let currentWeek = parseInt(weekNumberMatch[1]);
-            let newWeek = currentWeek + weekOffset;
-            // Adjust week number to overflow to 1 after reaching 53
-            newWeek = (newWeek > 53) ? newWeek - 53 : (newWeek < 1) ? newWeek + 53 : newWeek;
-            let newTitle = originalTitle.replace(/z\d+H/, `z${newWeek}H`);
-            document.title = newTitle;
-        }
+    let weekNumberMatch = originalTitle.match(/z(\d+)H/);
+    if (weekNumberMatch) {
+        let currentWeek = parseInt(weekNumberMatch[1], 10);
+        let newWeek = currentWeek + weekOffset;
+        // Adjust week number to overflow to 1 after reaching 53
+        newWeek = (newWeek > 53) ? newWeek - 53 : (newWeek < 1) ? newWeek + 53 : newWeek;
+        // Ensure the week number has leading zeros
+        let newWeekStr = String(newWeek).padStart(2, '0');
+        let newTitle = originalTitle.replace(/z\d+H/, `z${newWeekStr}H`);
+        document.title = newTitle;
+    }
     } else {
     let t = "Educational Options Foundation Mail - Fwd: Home Timesheets - ";
     let ogTitle = document.title;
