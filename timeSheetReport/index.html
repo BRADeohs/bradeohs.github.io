@@ -40,7 +40,11 @@
     console.log('Setting logo text.');
     logoText.innerText = 'TimeSheetReport v' + versionNumber;
   }
-
+	  var vNum = document.getElementById('vNum');
+  if (vNum) {
+    console.log('Setting vNum.');
+    vNum.innerText = 'Version: ' + versionNumber;
+  }
   // Dynamically set the sheet ID in the installation section
   var installationLink = document.getElementById('ssLink');
   if (installationLink) {
@@ -162,7 +166,7 @@ if (updatedDateElement) {
             <div class="row">
               <div class="col-sm-6 col-lg-4">
                 <ul class="list-unstyled">
-                  <li>
+                  <li id="vNum">
                     <strong>Version:</strong> 7.27
                   </li>
                   <li>
